@@ -1,24 +1,12 @@
 {
-  "myProfile": {
-    "id": "11102",
-    "username": "m.udovcic",
-    "followers_count": 2300,
-    "followed_count": 180,
-    "email": "marko54@gmail.com",
-    "first_name": "Marko",
-    "last_name": "Udovcic",
-    "description": "Designer and UX enthusiast, creating user-friendly experiences.",
-    "img_url": "https://example.com/images/jane_smith_profile.jpg",
-    "posts": [
-      {
-        "id": 121212,
-        "title": "Post1",
-        "description": "desc1",
-        "img": "null",
-        "comments": [{}]
-      }
-    ]
-  },
+  "posts": [
+    {
+      "id": "41fb1af2-0fb9-4992-ab1f-1bc65447aff1",
+      "moment": "test",
+      "username": "m.udovcic",
+      "created_at": "17/12/2024, 23:10:21"
+    }
+  ],
   "allusers": [
     {
       "id": "1",
