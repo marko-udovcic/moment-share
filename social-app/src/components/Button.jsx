@@ -1,13 +1,13 @@
 import PropTypes from "prop-types";
-export default function Button({ children, removeOnClick, className }) {
+export default function Button({ children, onClick, className }) {
   return (
-    <button onClick={removeOnClick} className={`${className}`}>
+    <button onClick={onClick} className={`${className}`}>
       {children}
     </button>
   );
 }
 Button.propTypes = {
   children: PropTypes.string,
-  removeOnClick: PropTypes.func,
+  onClick: PropTypes.func,
   className: PropTypes.node,
 };
