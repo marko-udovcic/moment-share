@@ -7,7 +7,7 @@ export default function Button({ children, onClick, className }) {
   );
 }
 Button.propTypes = {
-  children: PropTypes.string,
+  children: PropTypes.node,
   onClick: PropTypes.func,
   className: PropTypes.node,
 };
