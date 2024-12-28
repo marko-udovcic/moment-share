@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-unused-vars
 export function shuffleUsers(list) {
   let shuffledList = [...list];
   for (let i = shuffledList.length - 1; i > 0; i--) {

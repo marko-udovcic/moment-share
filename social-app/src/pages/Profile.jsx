@@ -1,33 +1,37 @@
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Header from "../components/Header";
 import { FollowerModal } from "../components/FollowerModal";
 import PropTypes from "prop-types";
 import { myContext } from "../context/Context";
 import ListCards from "../components/ListCards";
+import ListDiscoverUser from "../components/ListDiscoverUser";
+
 export default function Profile({ showFollowers, showFollowing, setShowFollowers, setShowFollowing }) {
   const [listFollowers, setListFollowers] = useState([]);
   const [listFollowing, setListFollowing] = useState([]);
   const [listMoments, setListMoments] = useState([]);
+  const [listDiscoverUsers, setListDiscoverUsers] = useState([]);
   const [showDiscover, setShowDiscover] = useState(false);
 
-  function handleShowFollowers() {
+  const handleShowFollowers = () => {
     setShowFollowers((show) => !show);
-  }
-  function handleShowFollowing() {
-    setShowFollowing(showFollowing ? false : true);
-  }
-  async function fetchMoments() {
+  };
+
+  const handleShowFollowing = () => {
+    setShowFollowing((prev) => !prev);
+  };
+
+  const fetchData = useCallback(async (url, setList) => {
     try {
-      const res = await fetch("/posts");
+      const res = await fetch(url);
       const data = await res.json();
-      setListMoments(data);
+      setList(data);
     } catch (error) {
       console.error("Error: ", error);
     }
-  }
+  }, []);
 
-  function fetchUsers() {
+  const fetchUsers = useCallback(() => {
     Promise.all([
       fetch("/followme")
         .then((response) => response.json())
@@ -36,14 +40,31 @@ export default function Profile({ showFollowers, showFollowing, setShowFollowers
         .then((response) => response.json())
         .then((data) => setListFollowing(data)),
     ]).catch(() => {
-      console.log("error during loading");
+      console.log("Error during loading");
     });
-  }
-  useEffect(() => {
-    fetchUsers();
-    fetchMoments();
   }, []);
 
+  useEffect(() => {
+    function handleEscapeKey(e) {
+      if (e.key === "Escape") {
+        setShowFollowers(false);
+        setShowDiscover(false);
+        setShowFollowing(false);
+      }
+    }
+
+    async function fetchInitialData() {
+      await fetchData("/posts", setListMoments);
+      await fetchUsers();
+    }
+
+    fetchInitialData();
+    document.addEventListener("keydown", handleEscapeKey);
+
+    return () => {
+      document.removeEventListener("keydown", handleEscapeKey);
+    };
+  }, [setShowDiscover, setShowFollowers, setShowFollowing, fetchUsers, fetchData]);
   return (
     <div>
       <myContext.Provider
@@ -53,7 +74,7 @@ export default function Profile({ showFollowers, showFollowing, setShowFollowers
           listFollowing,
           setListFollowing,
           fetchUsers,
-          fetchMoments,
+          fetchData,
           listMoments,
         }}
       >
@@ -71,9 +92,15 @@ export default function Profile({ showFollowers, showFollowing, setShowFollowers
             showFollowing={showFollowing}
           />
         )}
-        {showDiscover && <div className="mx-[1rem] md:mx-[3rem] mb-4 h-14 bg-red-900">Test</div>}
+        {showDiscover && (
+          <ListDiscoverUser
+            listDiscoverUsers={listDiscoverUsers}
+            setListDiscoverUsers={setListDiscoverUsers}
+            fetchData={fetchData}
+          />
+        )}
         <section>
-          <ListCards />
+          <ListCards setListMoments={setListMoments} />
         </section>
       </myContext.Provider>
     </div>
