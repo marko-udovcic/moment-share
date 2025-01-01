@@ -1,10 +1,7 @@
 import Button from "./Button";
 import PropTypes from "prop-types";
-import { myContext } from "../context/Context";
-import { useContext } from "react";
-export default function User({ follower, showFollowers }) {
-  const { fetchUsers } = useContext(myContext);
 
+export default function User({ follower, showFollowers }) {
   async function deleteUser(id, url) {
     const res = await fetch(`${url}/${id}`, {
       method: "DELETE",
@@ -15,7 +12,6 @@ export default function User({ follower, showFollowers }) {
     if (!res.ok) {
       throw new Error("Failed to delete user");
     } else {
-      fetchUsers();
       console.log("User successfully deleted");
     }
   }
