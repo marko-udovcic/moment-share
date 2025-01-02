@@ -10,21 +10,26 @@ export default defineConfig({
   server: {
     port: 3000,
     proxy: {
+      "/allusers": {
+        target: "http://localhost:5000",
+        changeOrigin: true,
+        secure: false,
+      },
       "/posts": {
         target: "http://localhost:5000",
         changeOrigin: true,
         secure: false,
       },
       "/followme": {
-        target: "http://localhost:5000", // Backend server
-        changeOrigin: true, // Menja origin ako je potrebno
-        secure: false, // Ako vaš backend koristi HTTPS, postavite na true
+        target: "http://localhost:5000",
+        changeOrigin: true,
+        secure: false,
       },
-      // Preusmerava zahteve sa '/following' na vaš backend
+
       "/following": {
-        target: "http://localhost:5000", // Backend server
-        changeOrigin: true, // Menja origin ako je potrebno
-        secure: false, // Ako vaš backend koristi HTTPS, postavite na true
+        target: "http://localhost:5000",
+        changeOrigin: true,
+        secure: false,
       },
     },
   },
