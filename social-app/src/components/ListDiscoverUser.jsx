@@ -4,13 +4,39 @@ import "swiper/css";
 import { useEffect } from "react";
 import Card from "./Card";
 import Button from "./Button";
+import { myContext } from "../context/Context";
 import { shuffleUsers } from "../utils/arrayUtils";
+import { addFollowingUser, deleteUser } from "../services/userService";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useContext } from "react";
 
 export default function ListDiscoverUser({ listDiscoverUsers, setListDiscoverUsers, fetchData }) {
+  const { fetchUsers } = useContext(myContext);
+  const queryClient = useQueryClient();
+
+  function handleSuccess(queryKey) {
+    return () => {
+      queryClient.invalidateQueries([queryKey]);
+      fetchUsers();
+    };
+  }
+  const addUserMutation = useMutation({
+    mutationFn: addFollowingUser,
+    onSuccess: handleSuccess("users"),
+  });
+  const deleteUserMutation = useMutation({
+    mutationFn: deleteUser,
+    onSuccess: handleSuccess("users"),
+  });
+
   function handleRemoveDiscoverUser(userId) {
     setListDiscoverUsers((listDiscoverUsers) => listDiscoverUsers.filter((user) => user.id !== userId));
   }
-
+  function handleFollowUser(user) {
+    addUserMutation.mutate(user);
+    handleRemoveDiscoverUser(user.id);
+    deleteUserMutation.mutate(user.id);
+  }
   useEffect(() => {
     fetchData("/allusers", setListDiscoverUsers);
   }, []);
@@ -52,7 +78,12 @@ export default function ListDiscoverUser({ listDiscoverUsers, setListDiscoverUse
                   <h2 className="text-4xl uppercase font-bold">{user.username[0]}</h2>
                 </div>
                 <h3 className="text-xl m-5">{user.username}</h3>
-                <Button className="bg-blue-500 p-2 w-1/2 absolute bottom-5 rounded-md hover:bg-blue-600 font-semibold">
+                <Button
+                  className="bg-blue-500 p-2 w-1/2 absolute bottom-5 rounded-md hover:bg-blue-600 font-semibold"
+                  onClick={() => {
+                    handleFollowUser(user);
+                  }}
+                >
                   Follow
                 </Button>
               </Card>
