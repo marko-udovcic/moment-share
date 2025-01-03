@@ -1,7 +1,9 @@
 import Button from "./Button";
 import PropTypes from "prop-types";
-
+import { useContext } from "react";
+import { myContext } from "../context/Context";
 export default function User({ follower, showFollowers }) {
+  const { setListFollowing } = useContext(myContext);
   async function deleteUser(id, url) {
     const res = await fetch(`${url}/${id}`, {
       method: "DELETE",
@@ -13,6 +15,7 @@ export default function User({ follower, showFollowers }) {
       throw new Error("Failed to delete user");
     } else {
       console.log("User successfully deleted");
+      setListFollowing((prev) => prev.filter((user) => user.id !== id));
     }
   }
 
@@ -22,9 +25,6 @@ export default function User({ follower, showFollowers }) {
     showFollowers
       ? deleteUser(Number(id), "http://localhost:5000/followme")
       : deleteUser(id, "http://localhost:5000/following");
-    // showFollowers
-    //   ? setListFollowers((listFollowers) => listFollowers.filter((follower) => follower.id !== id))
-    //   : setListFollowing((listFollowing) => listFollowing.filter((follower) => follower.id !== id));
   }
   return (
     <>
