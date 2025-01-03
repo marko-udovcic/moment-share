@@ -4,14 +4,18 @@ import "swiper/css";
 import { useEffect } from "react";
 import Card from "./Card";
 import Button from "./Button";
+import { shuffleUsers } from "../utils/arrayUtils";
 
 export default function ListDiscoverUser({ listDiscoverUsers, setListDiscoverUsers, fetchData }) {
   function handleRemoveDiscoverUser(userId) {
     setListDiscoverUsers((listDiscoverUsers) => listDiscoverUsers.filter((user) => user.id !== userId));
   }
+
   useEffect(() => {
     fetchData("/allusers", setListDiscoverUsers);
   }, []);
+  listDiscoverUsers = shuffleUsers(listDiscoverUsers).slice(0, 6);
+
   return (
     <section className="mx-[1rem] md:mx-[3rem] mb-4 h-14 min-h-[18rem] relative">
       {listDiscoverUsers.length === 0 ? (
