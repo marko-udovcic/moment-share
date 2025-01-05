@@ -11,6 +11,9 @@ export async function getAllUsers() {
 export async function addUser(user) {
   return await appApi.post("/allusers", user);
 }
+export async function addFollowingUser(user) {
+  return await appApi.post("/following", user);
+}
 
 export async function updateUser(user) {
   return await appApi.patch(`/allusers/${user.id}`, user);
