@@ -1,11 +1,9 @@
-import { useContext } from "react";
-import { myContext } from "../context/Context";
-import Card from "./Card";
-import Button from "./Button";
-import PropTypes from "prop-types";
+import Card from "./ui/Card";
+import Button from "./ui/Button";
+import { useProfile } from "../context/ProfileContext";
 
-export default function ListCards({ setListMoments }) {
-  const { listMoments, fetchData } = useContext(myContext);
+export default function ListCards() {
+  const { listMoments, fetchData, setListMoments } = useProfile();
   const filteredListMoments = listMoments.filter((moment) => moment.username === "m.udovcic");
 
   function getLuminance(color) {
@@ -78,6 +76,3 @@ export default function ListCards({ setListMoments }) {
     </div>
   );
 }
-ListCards.propTypes = {
-  setListMoments: PropTypes.func,
-};
