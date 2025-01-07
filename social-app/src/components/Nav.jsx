@@ -12,18 +12,16 @@ export default function Nav() {
       <button className="absolute right-10 top-6 text-xl text-white md:hidden" onClick={toggleMenu}>
         {isOpen ? "X" : "Menu"}
       </button>
-      {/* prettier-ignore */}
       <nav
-       
-        className={`${isOpen ? "absolute top-10 mt-[10%] min-h-[50vh] md:relative md:right-0 md:top-0 md:mt-0 md:min-h-0" 
-                             : "min-h-[8vh] md:relative md:top-0"} flex w-full items-center justify-center`}
+        className={`${
+          isOpen
+            ? "absolute top-10 mt-[10%] min-h-[50vh] md:relative md:right-0 md:top-0 md:mt-0 md:min-h-0"
+            : "min-h-[8vh] md:relative md:top-0"
+          } flex w-full items-center justify-center`}
       >
-        {/* prettier-ignore */}
         <ul
-          className={`${
-            isOpen ? "flex" : "hidden"
-          } absolute top-20 h-full w-full flex-col items-center justify-center 
-          bg-slate-900 md:relative md:top-0 md:flex md:flex-row md:bg-transparent`}
+          className={`${isOpen ? "flex" : "hidden"} absolute top-20 h-full w-full flex-col items-center justify-center bg-slate-900
+            md:relative md:top-0 md:flex md:flex-row md:bg-transparent`}
         >
           {headerLinks.map((link, i) => (
             <li
