@@ -17,7 +17,10 @@ export default function App() {
     <ProfileProvider>
       <QueryClientProvider client={queryClient}>
         <Router>
-          <div className="sm:max-w-[calc(100%-160px) mx-auto min-h-screen border-[2px] border-t-0 border-white bg-slate-900 px-0 pt-4">
+          <div
+            className="sm:max-w-[calc(100%-160px) mx-auto min-h-screen border-[2px] border-t-0 border-white bg-slate-900 px-0 pt-4
+              relative"
+          >
             <Nav />
             <Routes>
               <Route path="/explore" element={<Explore />} />
