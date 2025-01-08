@@ -1,15 +1,15 @@
 import PropTypes from "prop-types";
-import { myContext } from "../context/Context";
-import { useContext } from "react";
-import Button from "./Button";
+
+import Button from "./ui/Button";
 import { IoPersonAddOutline } from "react-icons/io5";
+import { useProfile } from "../context/ProfileContext";
 export default function Header({
   handleShowFollowers,
   handleShowFollowing,
   listMomentsSize,
   setShowDiscover,
 }) {
-  const { listFollowing, listFollowers } = useContext(myContext);
+  const { listFollowing, listFollowers } = useProfile();
   const listFollowingLength = listFollowing.length;
   const listFollowersLength = listFollowers.length;
   return (
