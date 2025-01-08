@@ -3,11 +3,8 @@ import ListUsers from "./ListUsers";
 
 export function FollowerModal({ setShowFollowers, setShowFollowing, showFollowers, showFollowing }) {
   return (
-    <div className="z-0 mb-[5rem] min-h-full">
-      <div
-        className="relative m-auto max-h-[30rem] max-w-[calc(100%)] rounded-xl bg-gray-800 blur-none filter-none
-          lg:max-w-[calc(50%-100px)] xl:max-w-[calc(40%-100px)]"
-      >
+    <div className="fixed inset-0 z-50 bg-gray-900 bg-opacity-50 flex justify-center items-center">
+      <div className="w-[90%] max-w-[500px] rounded-xl bg-gray-800 blur-none filter-none transition-all duration-300 lg:w-[70%]">
         <div className="relative m-5 flex h-20 items-center justify-center bg-gray-800">
           <h2 className="text-lg font-semibold text-white">{showFollowers ? "Followers" : "Following"}</h2>
           <button
