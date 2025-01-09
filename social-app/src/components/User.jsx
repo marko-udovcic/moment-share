@@ -1,9 +1,9 @@
-import Button from "./Button";
+import { useProfile } from "../context/ProfileContext";
+import Button from "./ui/Button";
 import PropTypes from "prop-types";
-import { useContext } from "react";
-import { myContext } from "../context/Context";
+
 export default function User({ follower, showFollowers }) {
-  const { setListFollowing } = useContext(myContext);
+  const { setListFollowing } = useProfile();
   async function deleteUser(id, url) {
     const res = await fetch(`${url}/${id}`, {
       method: "DELETE",
