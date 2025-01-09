@@ -1,10 +1,8 @@
 import PropTypes from "prop-types";
 import User from "./User";
-import { myContext } from "../context/Context";
-import { useContext } from "react";
-
+import { useProfile } from "../context/ProfileContext";
 export default function ListUsers({ showFollowers, showFollowing }) {
-  const { listFollowing, listFollowers } = useContext(myContext);
+  const { listFollowing, listFollowers } = useProfile();
 
   const showList = showFollowers ? listFollowers : listFollowing;
   return (
