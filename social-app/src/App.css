@@ -2,13 +2,15 @@
   @apply bg-slate-900;
 }
 .edit-btn {
-  @apply row-start-3 w-24 rounded-xl bg-slate-400 p-2 font-semibold text-white hover:bg-slate-500 sm:col-start-3 sm:row-start-1;
+  @apply row-start-3 w-[40%] rounded-xl p-2 text-center font-semibold text-white hover:bg-slate-500 sm:col-start-3 sm:row-start-1 md:w-[50%] lg:w-[15%];
 }
 
 .cblur {
-  -webkit-backdrop-filter: saturate(180%) blur(20px);
   filter: blur(5px);
   z-index: 0;
   position: relative;
   background-color: antiquewhite;
+}
+#root {
+  border: 1px solid transparent;
 }
