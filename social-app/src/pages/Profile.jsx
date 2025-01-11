@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import Header from "../components/Header";
-import { FollowerModal } from "../components/FollowerModal";
+import Header from "../features/profile/components/Header";
+import { FollowerModal } from "../features/profile/components/FollowerModal";
 import PropTypes from "prop-types";
 import ListCards from "../components/ListCards";
-import ListDiscoverUser from "../components/ListDiscoverUser";
+import ListDiscoverUser from "../features/profile/components/ListDiscoverUser";
 import { useProfile } from "../context/ProfileContext";
 
 export default function Profile({ showFollowers, showFollowing, setShowFollowers, setShowFollowing }) {
