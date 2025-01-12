@@ -49,12 +49,13 @@ export default function ListDiscoverUser({ listDiscoverUsers, setListDiscoverUse
         </div>
       ) : (
         <Swiper
-          slidesPerView={6}
+          slidesPerView={5}
+          spaceBetween={10}
           breakpoints={{
             0: { slidesPerView: 2 },
             640: { slidesPerView: 3 },
             768: { slidesPerView: 3 },
-            1024: { slidesPerView: 5 },
+            1024: { slidesPerView: 4 },
           }}
         >
           {listDiscoverUsers.map((user) => (
