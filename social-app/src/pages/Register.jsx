@@ -1,33 +1,19 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "../styles/styles.css";
 import { useForm } from "react-hook-form";
 import AuthError from "../components/ui/AuthError";
-import { useMutation } from "@tanstack/react-query";
-import { createUser } from "../services/apiUsers";
-import { useQueryClient } from "@tanstack/react-query";
+import { useSignup } from "../features/auth/hooks/useSignup";
 
 function Register() {
-  const navigate = useNavigate();
+  const { signUp, isLoading } = useSignup();
   const {
     register,
     handleSubmit,
     formState: { errors },
-    // reset,
   } = useForm();
-  const queryClient = useQueryClient();
-  const { mutate } = useMutation({
-    mutationFn: createUser,
-    onSuccess: () => {
-      queryClient.invalidateQueries(["users"]);
-      navigate("/login");
-      // reset();
-    },
-  });
 
-  console.log(errors);
-  function onSubmit(data) {
-    const { password, ...rest } = data;
-    mutate({ ...rest, password_hash: password });
+  function onSubmit({ username, email, password }) {
+    signUp({ username, email, password });
   }
 
   return (
@@ -36,7 +22,7 @@ function Register() {
         <div className="hidden md:block md:w-1/2 h-[80vh] rounded-xl">
           <img
             src="/images/register.jpg"
-            alt="regoster bg"
+            alt="register bg"
             className="object-cover w-full h-[80vh] rounded-lg shadow-xl"
           />
         </div>
