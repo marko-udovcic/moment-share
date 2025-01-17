@@ -2,3 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 @import "./styles/styles.css";
+::-webkit-scrollbar {
+  width: auto;
+}
+/*track*/
+::-webkit-scrollbar-track {
+  background: rgb(2, 21, 38);
+  border-radius: 0px;
+}
+/*thumb*/
+::-webkit-scrollbar-thumb {
+  background: rgb(97, 219, 251);
+  border-color: rgb(97, 219, 251);
+  border-radius: 20px;
+}
