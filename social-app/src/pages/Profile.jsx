@@ -5,8 +5,11 @@ import PropTypes from "prop-types";
 import ListCards from "../components/ListCards";
 import ListDiscoverUser from "../features/profile/components/ListDiscoverUser";
 import { useProfile } from "../context/ProfileContext";
+import Nav from "../components/Nav";
 
-export default function Profile({ showFollowers, showFollowing, setShowFollowers, setShowFollowing }) {
+export default function Profile() {
+  const [showFollowers, setShowFollowers] = useState(false);
+  const [showFollowing, setShowFollowing] = useState(false);
   const [listDiscoverUsers, setListDiscoverUsers] = useState([]);
   const [showDiscover, setShowDiscover] = useState(false);
   const { listMoments } = useProfile();
@@ -33,7 +36,8 @@ export default function Profile({ showFollowers, showFollowing, setShowFollowers
     };
   }, [setShowFollowers, setShowFollowing]);
   return (
-    <div>
+    <>
+      <Nav />
       <Header
         handleShowFollowers={handleShowFollowers}
         handleShowFollowing={handleShowFollowing}
@@ -49,12 +53,16 @@ export default function Profile({ showFollowers, showFollowing, setShowFollowers
         />
       )}
       {showDiscover && (
-        <ListDiscoverUser listDiscoverUsers={listDiscoverUsers} setListDiscoverUsers={setListDiscoverUsers} />
+        <ListDiscoverUser
+          listDiscoverUsers={listDiscoverUsers}
+          setListDiscoverUsers={setListDiscoverUsers}
+          setShowDiscover={setShowDiscover}
+        />
       )}
       <section>
         <ListCards />
       </section>
-    </div>
+    </>
   );
 }
 
