@@ -60,7 +60,7 @@ export default function ListCards() {
                   <h3 className="break-words text-lg font-medium">{moment.moment}</h3>
                 </div>
               </div>
-              <p className="absolute bottom-0 left-0 m-4 text-sm text-black">{date}</p>
+              <p className={`absolute bottom-0 left-0 m-4 text-sm ${textColor}`}>{date}</p>
             </Card>
           );
         })
