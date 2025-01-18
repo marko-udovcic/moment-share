@@ -9,7 +9,7 @@ import Nav from "../components/Nav";
 export default function Create() {
   const { refreshData } = useProfile();
   const [moment, setMoment] = useState("");
-  const [color, setColor] = useState("#f1f5a2");
+  const [color, setColor] = useState("#1F2937");
   const inputEl = useRef(null);
   const addPost = useAddPost();
   const navigator = useNavigate();
