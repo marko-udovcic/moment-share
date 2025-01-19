@@ -1,6 +1,7 @@
 import { useState } from "react";
 import headerLinks from "../constants/headerlinks.json";
 import { NavLink } from "react-router-dom";
+import Logout from "../features/auth/components/Logout";
 
 export default function Nav() {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,7 +16,7 @@ export default function Nav() {
       <nav
         className={`${
           isOpen
-            ? "absolute top-10 mt-[10%] min-h-[50vh] md:relative md:right-0 md:top-0 md:mt-0 md:min-h-0"
+            ? "absolute top-10 mt-[10%] min-h-[50vh] md:relative md:right-0 md:top-0 md:mt-0 md:min-h-0 lg:relative"
             : "min-h-[8vh] md:relative md:top-0"
           } flex w-full items-center justify-center`}
       >
@@ -40,6 +41,12 @@ export default function Nav() {
               </NavLink>
             </li>
           ))}
+          <li
+            className="cursor-pointer rounded-xl py-5 font-sans text-[17px] font-semibold text-white md:px-5 md:py-2 lg:absolute
+              lg:right-10"
+          >
+            <Logout />
+          </li>
         </ul>
       </nav>
     </header>
