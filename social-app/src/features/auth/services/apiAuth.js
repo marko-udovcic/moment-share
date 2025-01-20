@@ -1,4 +1,4 @@
-import supabase from "../../../services/supaBaseClient"; // Proverite putanju
+import supabase from "../../../services/supaBaseClient"; // Check the path
 
 export async function signUp({ username, email, password }) {
   try {
@@ -13,13 +13,13 @@ export async function signUp({ username, email, password }) {
     });
 
     if (authError) {
-      console.error("Greška pri registraciji:", authError.message);
-      alert(`Greška: ${authError.message}`);
+      console.error("Error during registration:", authError.message);
+      alert(`Error: ${authError.message}`);
       throw new Error(authError.message);
     }
 
     const userId = authData.user?.id;
-    if (!userId) throw new Error("Korisnik nije uspešno kreiran u Authentication.");
+    if (!userId) throw new Error("User was not successfully created in Authentication.");
 
     const { data: dbData, error: dbError } = await supabase.from("users").insert([
       {
@@ -30,13 +30,13 @@ export async function signUp({ username, email, password }) {
     ]);
 
     if (dbError) {
-      console.error("Greška pri dodavanju korisnika u tabelu 'users':", dbError.message);
-      alert(`Greška u bazi: ${dbError.message}`);
+      console.error("Error adding user to 'users' table:", dbError.message);
+      alert(`Database error: ${dbError.message}`);
       throw new Error(dbError.message);
     }
     return dbData;
   } catch (err) {
-    console.error("Greška pri registraciji i dodavanju u bazu:", err.message);
+    console.error("Error during registration and adding to the database:", err.message);
     throw err;
   }
 }
@@ -49,15 +49,15 @@ export async function login({ email, password }) {
     });
 
     if (error) {
-      console.error("Greška pri prijavi:", error.message);
-      alert(`Greška: ${error.message}`);
+      console.error("Error during login:", error.message);
+      alert(`Error: ${error.message}`);
       throw new Error(error.message);
     }
 
-    console.log("Prijava uspešna:", data);
+    console.log("Login successful:", data);
     return data;
   } catch (err) {
-    console.error("Greška pri prijavi:", err.message);
+    console.error("Error during login:", err.message);
     throw err;
   }
 }
@@ -70,13 +70,14 @@ export async function getCurrentUser() {
     const { data: userData, error: userError } = await supabase.auth.getUser();
     if (userError) throw new Error(userError.message);
 
-    console.log("Trenutni korisnik:", userData.user);
+    console.log("Current user:", userData.user);
     return userData.user;
   } catch (err) {
-    console.error("Greška pri dohvaćanju trenutnog korisnika:", err.message);
+    console.error("Error fetching the current user:", err.message);
     throw err;
   }
 }
+
 export async function logout() {
   const { error } = await supabase.auth.signOut();
   if (error) throw new Error(error.message);
