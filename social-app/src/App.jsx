@@ -13,7 +13,7 @@ export default function App() {
       <Router>
         <div
           className="sm:max-w-[calc(100%-160px) mx-auto min-h-screen border-[2px] border-t-0 border-white bg-slate-900 px-0 pt-4
-            relative"
+            relative lg:mx-[5%] 2xl:mx-[10%]"
         >
           <Routes>
             <Route path="/login" element={<Login />} />
