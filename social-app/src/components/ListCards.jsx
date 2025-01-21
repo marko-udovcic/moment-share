@@ -3,7 +3,7 @@ import Card from "./ui/Card";
 import Button from "./ui/Button";
 import { useProfile } from "../context/ProfileContext";
 import { getLuminance } from "../utils/colorUtils";
-
+import Reveal from "./ui/Reveal";
 export default function ListCards() {
   const { listMoments, fetchData, setListMoments } = useProfile();
   const filteredListMoments = listMoments.filter((moment) => moment.username === "m.udovcic");
@@ -56,9 +56,11 @@ export default function ListCards() {
                 className="relative flex flex-grow items-center justify-center overflow-auto rounded-[20px]"
                 style={{ backgroundColor: moment.color }}
               >
-                <div className="max-h-full overflow-y-auto text-center">
-                  <h3 className="break-words text-lg font-medium">{moment.moment}</h3>
-                </div>
+                <Reveal>
+                  <div className="max-h-full overflow-y-auto text-center">
+                    <h3 className="break-words text-lg font-medium">{moment.moment}</h3>
+                  </div>
+                </Reveal>
               </div>
               <p className={`absolute bottom-0 left-0 m-4 text-sm ${textColor}`}>{date}</p>
             </Card>
