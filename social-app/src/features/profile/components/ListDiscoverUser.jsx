@@ -8,6 +8,7 @@ import Button from "../../../components/ui/Button";
 import { shuffleUsers } from "../../../utils/arrayUtils";
 import { addFollowingUser, deleteUser } from "../../../services/userService";
 import { useProfile } from "../../../context/ProfileContext";
+import { Autoplay } from "swiper/modules";
 
 export default function ListDiscoverUser({ listDiscoverUsers, setListDiscoverUsers }) {
   const { fetchUsers, fetchData } = useProfile();
@@ -49,8 +50,14 @@ export default function ListDiscoverUser({ listDiscoverUsers, setListDiscoverUse
         </div>
       ) : (
         <Swiper
+          modules={[Autoplay]}
           slidesPerView={5}
           spaceBetween={10}
+          loop={true}
+          autoplay={{
+            delay: 1000,
+            disableOnInteraction: false,
+          }}
           breakpoints={{
             0: { slidesPerView: 2 },
             640: { slidesPerView: 3 },
@@ -59,7 +66,10 @@ export default function ListDiscoverUser({ listDiscoverUsers, setListDiscoverUse
           }}
         >
           {listDiscoverUsers.map((user) => (
-            <SwiperSlide key={user.id} className="mr-5 cursor-pointer lg:mr-8">
+            <SwiperSlide
+              key={user.id}
+              className="mr-5 cursor-pointer lg:mr-8 transform transition-transform duration-500 ease-out will-change-transform"
+            >
               <Card
                 className={
                   "bg-gray-700 w-full h-64 flex items-center justify-center flex-col rounded-lg relative text-white "
