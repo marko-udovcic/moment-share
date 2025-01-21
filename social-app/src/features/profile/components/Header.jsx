@@ -4,6 +4,7 @@ import { IoPersonAddOutline } from "react-icons/io5";
 import { useProfile } from "../../../context/ProfileContext";
 import H3 from "./reusable/H3";
 import { useCurrentUser } from "../hooks/useCurrentUser";
+import Reveal from "../../../components/ui/Reveal";
 export default function Header({
   handleShowFollowers,
   handleShowFollowing,
@@ -17,7 +18,10 @@ export default function Header({
   return (
     <div className="z-50 min-h-24 sm:px-28 2xl:ml-[10rem]">
       <div className="grid-col-3 grid grid-rows-3 gap-2 bg-slate-900 p-5 sm:grid-cols-3 sm:grid-rows-2 sm:gap-2">
-        <H3 className="sm:text-xl">{currentUser.username}</H3>
+        <Reveal>
+          <H3 className="sm:text-xl">{currentUser.username}</H3>
+        </Reveal>
+
         <Button className="edit-btn" onClick={() => setShowDiscover((prev) => !prev)}>
           <IoPersonAddOutline className="text-3xl" />
         </Button>
