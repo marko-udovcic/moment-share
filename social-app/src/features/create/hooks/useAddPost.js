@@ -1,13 +1,15 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { addPost } from "../services/postsService";
-
+import { addPost as addPostApi } from "../services/postsService";
+import { useNavigate } from "react-router-dom";
 export function useAddPost() {
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
-  const mutation = useMutation({
-    mutationFn: addPost,
+  const { mutate: addPost } = useMutation({
+    mutationFn: addPostApi,
     onSuccess: () => {
-      queryClient.invalidateQueries(["posts"]);
+      queryClient.invalidateQueries(["myMoments"]);
+      navigate("/profile", { replace: true });
     },
     onError: (error) => {
       console.error("Error adding post:", error.message);
@@ -15,5 +17,5 @@ export function useAddPost() {
     },
   });
 
-  return mutation.mutate;
+  return addPost;
 }
