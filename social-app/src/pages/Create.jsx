@@ -1,19 +1,16 @@
 import { useRef, useEffect } from "react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useProfile } from "../context/ProfileContext";
+
 import { useAddPost } from "../features/create/hooks/useAddPost";
 import Button from "../components/ui/Button";
 import Nav from "../components/Nav";
 import { useCurrentUser } from "../features/profile/hooks/useCurrentUser";
 export default function Create() {
-  const { refreshData } = useProfile();
+  const { user: currentUser } = useCurrentUser();
+  const addPost = useAddPost();
   const [moment, setMoment] = useState("");
   const [color, setColor] = useState("#1F2937");
-  const { user: currentUser } = useCurrentUser();
   const inputEl = useRef(null);
-  const addPost = useAddPost();
-  const navigator = useNavigate();
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -25,13 +22,7 @@ export default function Create() {
       color,
     };
 
-    addPost(newPost, {
-      onSuccess: () => {
-        setMoment("");
-        navigator("/profile");
-        refreshData();
-      },
-    });
+    addPost(newPost);
   }
 
   useEffect(() => {
