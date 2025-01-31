@@ -1,30 +1,23 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { getCurrentUser } from "../../auth/services/apiAuth";
+import { useProfileStore } from "../../../context/zustand/useProfileStore";
+import { useEffect } from "react";
 
 export function useCurrentUser() {
-  const [user, setUser] = useState(null); // Stores the user data
-  const [loading, setLoading] = useState(true);
+  const setCurrentUser = useProfileStore((state) => state.setCurrentUser);
+  const { data: currentUser, isLoading } = useQuery({
+    queryKey: ["currentUser"],
+    queryFn: getCurrentUser,
+    onError: (err) => {
+      console.error("Error fetching current user:", err);
+    },
+  });
 
   useEffect(() => {
-    async function fetchUserData() {
-      try {
-        const fetchedUser = await getCurrentUser();
-        if (fetchedUser) {
-          setUser({
-            username: fetchedUser.user_metadata.username,
-            email: fetchedUser.email,
-            id: fetchedUser.id,
-          });
-        }
-      } catch (err) {
-        console.error("Error during loading user:", err.message);
-      } finally {
-        setLoading(false);
-      }
+    if (currentUser) {
+      setCurrentUser(currentUser);
     }
+  }, [currentUser, setCurrentUser]);
 
-    fetchUserData();
-  }, []);
-
-  return { user, loading };
+  return { user: currentUser, isLoading };
 }
