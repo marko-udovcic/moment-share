@@ -1,24 +1,10 @@
 import supabase from "./supaBaseClient";
-export async function getUserMoments() {
-  try {
-    const {
-      data: { user },
-      error: userError,
-    } = await supabase.auth.getUser();
-
-    if (userError) {
-      throw userError;
-    }
-    const { data, error } = await supabase.from("posts").select("*").eq("user_id", user.id);
-
-    if (error) {
-      throw error;
-    }
-    return data;
-  } catch (error) {
-    console.error("Error fetching user moments:", error.message);
+export async function getUserMoments(id) {
+  const { data, error } = await supabase.from("posts").select("*").eq("user_id", id);
+  if (error) {
     throw error;
   }
+  return data;
 }
 
 export async function deleteMoment(id) {
