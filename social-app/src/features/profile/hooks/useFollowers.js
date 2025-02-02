@@ -7,7 +7,7 @@ export function useFollowers(currentUserId) {
     error,
     isLoading,
   } = useQuery({
-    queryKey: ["myFollowers"],
+    queryKey: ["myFollowers", currentUserId],
     queryFn: () => getAllFollowersApi(currentUserId),
     enabled: Boolean(currentUserId),
   });
