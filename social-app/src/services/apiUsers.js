@@ -13,3 +13,18 @@ export async function getAllFollowers(id) {
   }));
   return formattedData;
 }
+
+export async function getAllFollowing(id) {
+  const { data, error } = await supabase
+    .from("followers")
+    .select("following_id,following:users!fk_following(username)")
+    .eq("follower_id", id);
+  if (error) {
+    throw error;
+  }
+  const formattedData = data.map((following) => ({
+    username: following.following?.username,
+    id: following.following_id,
+  }));
+  return formattedData;
+}
