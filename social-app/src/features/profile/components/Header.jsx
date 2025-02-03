@@ -1,20 +1,27 @@
 import PropTypes from "prop-types";
 import Button from "../../../components/ui/Button";
 import { IoPersonAddOutline } from "react-icons/io5";
-import { useProfile } from "../../../context/ProfileContext";
 import H3 from "./reusable/H3";
-import { useCurrentUser } from "../hooks/useCurrentUser";
 import Reveal from "../../../components/ui/Reveal";
-export default function Header({
-  handleShowFollowers,
-  handleShowFollowing,
-  listMomentsSize,
-  setShowDiscover,
-}) {
-  const { listFollowing, listFollowers } = useProfile();
+import { useCurrentUser } from "../hooks/useCurrentUser";
+import { useFollowers } from "../hooks/useFollowers";
+import { useProfile } from "../../../context/ProfileContext";
+
+export default function Header({ handleShowFollowers, handleShowFollowing, setShowDiscover }) {
+  const { myMoments } = useProfile();
+  const { user: currentUser } = useCurrentUser();
+  const { myFollowers } = useFollowers(currentUser?.id);
+
+  const listFollowing = [];
   const listFollowingLength = listFollowing.length;
-  const listFollowersLength = listFollowers.length;
-  const currentUser = useCurrentUser();
+  const listFollowersLength = myFollowers?.length;
+  const myMomentsLength = myMoments?.length;
+
+  if (!currentUser) return <div>Loading...</div>;
+  function closeDiscover() {
+    setShowDiscover((prev) => !prev);
+  }
+
   return (
     <div className="z-50 min-h-24 sm:px-28 2xl:ml-[10rem]">
       <div className="grid-col-3 grid grid-rows-3 gap-2 bg-slate-900 p-5 sm:grid-cols-3 sm:grid-rows-2 sm:gap-2">
@@ -22,11 +29,11 @@ export default function Header({
           <H3 className="sm:text-xl">{currentUser.username}</H3>
         </Reveal>
 
-        <Button className="edit-btn" onClick={() => setShowDiscover((prev) => !prev)}>
+        <Button className="edit-btn" onClick={closeDiscover}>
           <IoPersonAddOutline className="text-3xl" />
         </Button>
 
-        <H3 className="row-start-2">{listMomentsSize} Post</H3>
+        <H3 className="row-start-2">{myMomentsLength} Post</H3>
         <H3 className="row-start-2" onClick={handleShowFollowers}>
           {listFollowersLength} Followers
         </H3>
@@ -43,6 +50,5 @@ Header.propTypes = {
   listFollowing: PropTypes.array,
   handleShowFollowers: PropTypes.func,
   handleShowFollowing: PropTypes.func,
-  listMomentsSize: PropTypes.number,
   setShowDiscover: PropTypes.func,
 };
