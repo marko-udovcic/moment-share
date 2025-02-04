@@ -28,3 +28,15 @@ export async function getAllFollowing(id) {
   }));
   return formattedData;
 }
+
+export async function getDiscoverUsers(followList) {
+  const { data, error } = await supabase
+    .from("users")
+    .select("*")
+    .not("id", "in", `(${followList.join(",")})`);
+
+  if (error) {
+    console.error("Error fetching discover users:", error);
+  }
+  return data;
+}
