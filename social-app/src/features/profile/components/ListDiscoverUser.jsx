@@ -1,46 +1,37 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import PropTypes from "prop-types";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import { useEffect } from "react";
 import Card from "../../../components/ui/Card";
 import Button from "../../../components/ui/Button";
 import { shuffleUsers } from "../../../utils/arrayUtils";
-import { addFollowingUser, deleteUser } from "../../../services/userService";
-import { useProfile } from "../../../context/ProfileContext";
-import { Autoplay } from "swiper/modules";
+import { useProfileStore } from "../../../context/zustand/useProfileStore";
+import { useFollowing } from "../hooks/useFollowing";
+import { useFollowers } from "../hooks/useFollowers";
+import { useDiscoverUsers } from "../../../hooks/useDiscoverUsers";
+import { useEffect, useState } from "react";
 
-export default function ListDiscoverUser({ listDiscoverUsers, setListDiscoverUsers }) {
-  const { fetchUsers, fetchData } = useProfile();
-  const queryClient = useQueryClient();
-
-  function handleSuccess(queryKey) {
-    return () => {
-      queryClient.invalidateQueries([queryKey]);
-      fetchUsers();
-    };
-  }
-  const addUserMutation = useMutation({
-    mutationFn: addFollowingUser,
-    onSuccess: handleSuccess("users"),
-  });
-  const deleteUserMutation = useMutation({
-    mutationFn: deleteUser,
-    onSuccess: handleSuccess("users"),
-  });
+export default function ListDiscoverUser() {
+  const [listDiscoverUsers, setListDiscoverUsers] = useState([]);
+  const { currentUser } = useProfileStore();
+  const { myFollowing } = useFollowing(currentUser?.id);
+  const { myFollowers } = useFollowers(currentUser?.id);
+  const { discoverUsers, isLoading } = useDiscoverUsers(currentUser?.id, myFollowing, myFollowers);
 
   function handleRemoveDiscoverUser(userId) {
     setListDiscoverUsers((listDiscoverUsers) => listDiscoverUsers.filter((user) => user.id !== userId));
   }
   function handleFollowUser(user) {
-    addUserMutation.mutate(user);
     handleRemoveDiscoverUser(user.id);
-    deleteUserMutation.mutate(user.id);
   }
+
   useEffect(() => {
-    fetchData("/allusers", setListDiscoverUsers);
-  }, []);
-  listDiscoverUsers = shuffleUsers(listDiscoverUsers).slice(0, 6);
+    if (discoverUsers && discoverUsers.length > 0) {
+      const shuffledUsers = shuffleUsers(discoverUsers).slice(0, 6);
+      setListDiscoverUsers(shuffledUsers);
+    }
+  }, [discoverUsers]);
+
+  if (isLoading) return <div>Loading</div>;
 
   return (
     <section className="mx-[1rem] md:mx-[3rem] mb-4 h-14 min-h-[18rem] relative lg:p-4">
@@ -50,14 +41,8 @@ export default function ListDiscoverUser({ listDiscoverUsers, setListDiscoverUse
         </div>
       ) : (
         <Swiper
-          modules={[Autoplay]}
           slidesPerView={5}
           spaceBetween={10}
-          loop={true}
-          autoplay={{
-            delay: 1000,
-            disableOnInteraction: false,
-          }}
           breakpoints={{
             0: { slidesPerView: 2 },
             640: { slidesPerView: 3 },
@@ -72,7 +57,7 @@ export default function ListDiscoverUser({ listDiscoverUsers, setListDiscoverUse
             >
               <Card
                 className={
-                  "bg-gray-700 w-full h-64 flex items-center justify-center flex-col rounded-lg relative text-white "
+                  "bg-slate-800 w-full h-64 flex items-center justify-center flex-col rounded-lg relative text-white "
                 }
               >
                 <Button
