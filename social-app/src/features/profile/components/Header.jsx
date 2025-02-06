@@ -6,18 +6,20 @@ import Reveal from "../../../components/ui/Reveal";
 import { useCurrentUser } from "../hooks/useCurrentUser";
 import { useFollowers } from "../hooks/useFollowers";
 import { useProfile } from "../../../context/ProfileContext";
+import { useFollowing } from "../hooks/useFollowing";
 
 export default function Header({ handleShowFollowers, handleShowFollowing, setShowDiscover }) {
   const { myMoments } = useProfile();
   const { user: currentUser } = useCurrentUser();
+  const { myFollowing, isLoading } = useFollowing(currentUser?.id);
   const { myFollowers } = useFollowers(currentUser?.id);
 
-  const listFollowing = [];
-  const listFollowingLength = listFollowing.length;
+  if (!currentUser || isLoading) return <div>Loading...</div>;
+
+  const listFollowingLength = myFollowing?.length;
   const listFollowersLength = myFollowers?.length;
   const myMomentsLength = myMoments?.length;
 
-  if (!currentUser) return <div>Loading...</div>;
   function closeDiscover() {
     setShowDiscover((prev) => !prev);
   }
