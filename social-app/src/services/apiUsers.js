@@ -40,3 +40,16 @@ export async function getDiscoverUsers(followList) {
   }
   return data;
 }
+
+export async function followUser(followerId, followingId) {
+  const { data, error } = await supabase
+    .from("followers")
+    .insert([{ follower_id: followerId, following_id: followingId }]);
+
+  if (error) {
+    console.error("Error following user:", error);
+    return null;
+  }
+
+  return data;
+}
