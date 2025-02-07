@@ -1,31 +1,21 @@
 import { RxDotsVertical } from "react-icons/rx";
 import Card from "./ui/Card";
 import Button from "./ui/Button";
-import { useProfile } from "../context/ProfileContext";
 import { getLuminance } from "../utils/colorUtils";
 import Reveal from "./ui/Reveal";
-export default function ListCards() {
-  const { listMoments, fetchData, setListMoments } = useProfile();
-  const filteredListMoments = listMoments.filter((moment) => moment.username === "m.udovcic");
+import { useDeleteMoment } from "../features/profile/hooks/useDeleteMoment";
+import moment from "moment";
+import { useProfile } from "../context/ProfileContext";
 
-  async function deleteMoment(id, url) {
-    const res = await fetch(`${url}/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    if (!res.ok) {
-      throw new Error("Failed to delete user");
-    } else {
-      fetchData("/posts", setListMoments);
-      console.log("Successfully deleted");
-    }
-  }
-  function handleRemoveMoment(id) {
+export default function ListCards() {
+  let { myMoments } = useProfile();
+  myMoments = myMoments?.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+  const { deleteMoment, isLoading } = useDeleteMoment();
+
+  async function handleRemoveMoment(id) {
     const confirm = window.confirm("are you sure you want remove moment");
     if (!confirm) return;
-    deleteMoment(id, "/posts");
+    deleteMoment(id);
   }
 
   return (
@@ -33,19 +23,22 @@ export default function ListCards() {
       className="z-0 m-auto mx-3 grid min-h-[50vh] grid-cols-1 gap-10 rounded-lg sm:grid-cols-2 md:mx-10 md:grid-cols-3
         lg:grid-cols-4 lg:p-5"
     >
-      {filteredListMoments && filteredListMoments.length > 0 ? (
-        filteredListMoments.map((moment) => {
-          const textColor = getLuminance(moment.color) > 128 ? "text-black" : "text-white";
-          const date = moment.created_at.split(" ")[0];
+      {myMoments && myMoments.length > 0 ? (
+        myMoments.map((myMoment) => {
+          const textColor = getLuminance(myMoment.color) > 128 ? "text-black" : "text-white";
+          const date = moment(myMoment.created_at).calendar();
 
           return (
             <Card
-              key={moment.id}
-              className={`relative flex h-[20rem] flex-col justify-between overflow-hidden rounded-[4px] p-3 text-center ${textColor} `}
-              style={{ backgroundColor: moment.color }}
+              key={myMoment.id}
+              className={
+                "relative flex h-[20rem] flex-col justify-between overflow-hidden rounded-[4px] p-3 text-center "
+              }
+              style={{ backgroundColor: myMoment.color }}
             >
               <Button
-                onClick={() => handleRemoveMoment(moment.id)}
+                disabled={isLoading}
+                onClick={() => handleRemoveMoment(myMoment.id)}
                 className={
                   "mt-3 self-end p-1 transition duration-300 font-semibold text-white bg-[#000000] bg-opacity-30 rounded-full"
                 }
@@ -54,11 +47,11 @@ export default function ListCards() {
               </Button>
               <div
                 className="relative flex flex-grow items-center justify-center overflow-auto rounded-[20px]"
-                style={{ backgroundColor: moment.color }}
+                style={{ backgroundColor: myMoment.color }}
               >
                 <Reveal>
                   <div className="max-h-full overflow-y-auto text-center">
-                    <h3 className="break-words text-lg font-medium">{moment.moment}</h3>
+                    <h3 className={`break-words text-lg font-medium ${textColor}`}>{myMoment.content}</h3>
                   </div>
                 </Reveal>
               </div>
@@ -67,7 +60,9 @@ export default function ListCards() {
           );
         })
       ) : (
-        <div className="text-white">No moments available</div>
+        <div className="grid place-items-center text-white text-3xl col-span-full xl:text-4xl">
+          No moments yet
+        </div>
       )}
     </div>
   );
