@@ -20,8 +20,6 @@ export function useDiscoverUsers(currentUserId, myFollowing, myFollowers) {
   if (error) {
     console.error("Error fetching discover users:", error);
   }
-  if (!discoverUsers) {
-    console.log("nema discoverUsers");
-  }
+
   return { discoverUsers, isLoading };
 }
