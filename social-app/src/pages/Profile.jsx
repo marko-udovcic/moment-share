@@ -4,7 +4,6 @@ import { FollowerModal } from "../features/profile/components/FollowerModal";
 import PropTypes from "prop-types";
 import ListCards from "../components/ListCards";
 import ListDiscoverUser from "../features/profile/components/ListDiscoverUser";
-import { useProfile } from "../context/ProfileContext";
 import Nav from "../components/Nav";
 
 export default function Profile() {
@@ -12,7 +11,6 @@ export default function Profile() {
   const [showFollowing, setShowFollowing] = useState(false);
   const [listDiscoverUsers, setListDiscoverUsers] = useState([]);
   const [showDiscover, setShowDiscover] = useState(false);
-  const { listMoments } = useProfile();
   const handleShowFollowers = () => {
     setShowFollowers((show) => !show);
   };
@@ -42,7 +40,6 @@ export default function Profile() {
         handleShowFollowers={handleShowFollowers}
         handleShowFollowing={handleShowFollowing}
         setShowDiscover={setShowDiscover}
-        listMomentsSize={listMoments.length}
       />
       {(showFollowers || showFollowing) && (
         <FollowerModal
