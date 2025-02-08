@@ -5,20 +5,20 @@ import AuthError from "../components/ui/AuthError";
 import { useLogin } from "../features/auth/hooks/useLogin";
 
 function Login() {
-  const { login, isLoading } = useLogin();
+  const { login } = useLogin();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  // const { username } = user.user_metadata;
+
   function onSubmit({ email, password }) {
     login({ email, password });
   }
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-900 text-white">
-      <div className="flex flex-col md:flex-row items-center justify-between w-full md:w-3/4 lg:w-2/3 mx-4">
+      <div className="flex flex-col md:flex-row items-center justify-between w-full md:w-full lg:w-[80%] mx-4">
         <section className="md:w-1/2 p-5 shadow-lg rounded-lg lg:mr-10 w-full flex flex-col justify-between">
           <div className="flex flex-col mt-6">
             <h2 className="text-center text-4xl font-bold mb-2">Welcome Back </h2>

@@ -5,7 +5,7 @@ import AuthError from "../components/ui/AuthError";
 import { useSignup } from "../features/auth/hooks/useSignup";
 
 function Register() {
-  const { signUp, isLoading } = useSignup();
+  const { signUp } = useSignup();
   const {
     register,
     handleSubmit,
@@ -18,7 +18,7 @@ function Register() {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-900 text-white">
-      <div className="flex flex-col md:flex-row items-center justify-between w-full md:w-3/4 lg:w-2/3 mx-4">
+      <div className="flex flex-col md:flex-row items-center justify-between w-full md:w-full lg:w-[80%] mx-4">
         <div className="hidden md:block md:w-1/2 h-[80vh] rounded-xl">
           <img
             src="/images/register.jpg"
