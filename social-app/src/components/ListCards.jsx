@@ -20,7 +20,7 @@ export default function ListCards() {
 
   return (
     <div
-      className="z-0 m-auto mx-3 grid min-h-[50vh] grid-cols-1 gap-10 rounded-lg sm:grid-cols-2 md:mx-10 md:grid-cols-3
+      className="z-0 m-auto mx-3 grid min-h-[50vh] grid-cols-1 gap-10 rounded-lg sm:grid-cols-2 md:mx-10 md:grid-cols-2
         lg:grid-cols-4 lg:p-5"
     >
       {myMoments && myMoments.length > 0 ? (

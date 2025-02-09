@@ -2,6 +2,8 @@ import { useState } from "react";
 import headerLinks from "../constants/headerlinks.json";
 import { NavLink } from "react-router-dom";
 import Logout from "../features/auth/components/Logout";
+import { CiMenuFries } from "react-icons/ci";
+import { TfiClose } from "react-icons/tfi";
 
 export default function Nav() {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,19 +12,17 @@ export default function Nav() {
   }
   return (
     <header className="relative z-10 flex items-center justify-center">
-      <button className="absolute right-10 top-6 text-xl text-white md:hidden" onClick={toggleMenu}>
-        {isOpen ? "X" : "Menu"}
-      </button>
-      <nav
-        className={`${
-          isOpen
-            ? "absolute top-10 mt-[10%] min-h-[50vh] md:relative md:right-0 md:top-0 md:mt-0 md:min-h-0 lg:relative"
-            : "min-h-[8vh] md:relative md:top-0"
-          } flex w-full items-center justify-center`}
-      >
+      <nav className="flex w-full items-center justify-between px-10">
+        <button className="absolute right-10 top-6 z-20 text-xl text-white md:hidden" onClick={toggleMenu}>
+          {isOpen ? (
+            <TfiClose className="text-white text-2xl" />
+          ) : (
+            <CiMenuFries className="text-white text-2xl" />
+          )}
+        </button>
         <ul
-          className={`${isOpen ? "flex" : "hidden"} absolute top-20 h-full w-full flex-col items-center justify-center bg-slate-900
-            md:relative md:top-0 md:flex md:flex-row md:bg-transparent`}
+          className={`${isOpen ? "fixed inset-0 flex bg-slate-900 z-10" : "hidden"} flex-col items-center justify-center md:relative
+            md:flex md:flex-row md:bg-transparent md:space-x-5 w-full`}
         >
           {headerLinks.map((link, i) => (
             <li
