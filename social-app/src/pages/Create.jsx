@@ -1,16 +1,14 @@
-import { useRef, useEffect } from "react";
 import { useState } from "react";
-
 import { useAddPost } from "../features/create/hooks/useAddPost";
 import Button from "../components/ui/Button";
 import Nav from "../components/Nav";
 import { useCurrentUser } from "../features/profile/hooks/useCurrentUser";
+
 export default function Create() {
   const { user: currentUser } = useCurrentUser();
   const addPost = useAddPost();
   const [moment, setMoment] = useState("");
   const [color, setColor] = useState("#1F2937");
-  const inputEl = useRef(null);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -25,19 +23,6 @@ export default function Create() {
     addPost(newPost);
   }
 
-  useEffect(() => {
-    function callback(e) {
-      if (document.activeElement === inputEl.current) return;
-      if (e.code === "Enter") {
-        e.preventDefault();
-        setMoment("");
-        inputEl.current.focus();
-      }
-    }
-    document.addEventListener("keydown", callback);
-    return () => document.removeEventListener("keydown", callback);
-  }, []);
-
   return (
     <>
       <Nav />
@@ -49,7 +34,6 @@ export default function Create() {
             <textarea
               className="mb-5 h-[15rem] rounded-xl p-7 bg-slate-800 text-white focus:outline-none"
               value={moment}
-              ref={inputEl}
               onChange={(e) => setMoment(e.target.value)}
               placeholder="Share your current moment..."
             ></textarea>
