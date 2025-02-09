@@ -1,8 +1,15 @@
 import PropTypes from "prop-types";
 import ListUsers from "./ListUsers";
 import { useOutsideClick } from "../../../hooks/useOutsideClick";
+import { useEffect } from "react";
 
-export function FollowerModal({ setShowFollowers, setShowFollowing, showFollowers, showFollowing }) {
+export function FollowerModal({
+  setShowFollowers,
+  setShowFollowing,
+  showFollowers,
+  showFollowing,
+  setShowDiscover,
+}) {
   const close = () => {
     if (showFollowers) {
       setShowFollowers(false);
@@ -10,7 +17,9 @@ export function FollowerModal({ setShowFollowers, setShowFollowing, showFollower
       setShowFollowing(false);
     }
   };
-
+  useEffect(() => {
+    setShowDiscover(false);
+  }, [setShowDiscover]);
   const ref = useOutsideClick(close);
   return (
     <div className="fixed inset-0 z-50 bg-gray-900 bg-opacity-50 flex justify-center items-center">
@@ -33,6 +42,7 @@ export function FollowerModal({ setShowFollowers, setShowFollowing, showFollower
 FollowerModal.propTypes = {
   setShowFollowers: PropTypes.any,
   setShowFollowing: PropTypes.any,
+  setShowDiscover: PropTypes.any,
   showFollowers: PropTypes.bool,
   showFollowing: PropTypes.bool,
 };
