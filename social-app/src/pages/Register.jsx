@@ -24,6 +24,7 @@ function Register() {
             src="/images/register.jpg"
             alt="register bg"
             className="object-cover w-full h-[80vh] rounded-lg shadow-xl"
+            loading="lazy"
           />
         </div>
         <section className="md:w-1/2 p-5 shadow-lg rounded-lg lg:ml-10 w-full flex flex-col justify-between">

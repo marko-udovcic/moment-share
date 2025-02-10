@@ -59,6 +59,7 @@ function Login() {
             src="/images/login.jpg"
             alt="Login background"
             className="object-cover w-full h-[80vh] rounded-lg shadow-xl"
+            loading="lazy"
           />
         </div>
       </div>
