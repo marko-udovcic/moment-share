@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Header from "../features/profile/components/Header";
 import { FollowerModal } from "../features/profile/components/FollowerModal";
 import PropTypes from "prop-types";
@@ -19,20 +19,6 @@ export default function Profile() {
     setShowFollowing((prev) => !prev);
   };
 
-  useEffect(() => {
-    function handleEscapeKey(e) {
-      if (e.key === "Escape") {
-        setShowFollowers(false);
-        setShowDiscover(false);
-        setShowFollowing(false);
-      }
-    }
-    document.addEventListener("keydown", handleEscapeKey);
-
-    return () => {
-      document.removeEventListener("keydown", handleEscapeKey);
-    };
-  }, [setShowFollowers, setShowFollowing]);
   return (
     <>
       <Nav />
@@ -43,6 +29,7 @@ export default function Profile() {
       />
       {(showFollowers || showFollowing) && (
         <FollowerModal
+          setShowDiscover={setShowDiscover}
           setShowFollowers={setShowFollowers}
           setShowFollowing={setShowFollowing}
           showFollowers={showFollowers}
