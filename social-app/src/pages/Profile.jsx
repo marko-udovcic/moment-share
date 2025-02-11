@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Header from "../features/profile/components/Header";
+import Header from "../components/Header";
 import { FollowerModal } from "../features/profile/components/FollowerModal";
 import PropTypes from "prop-types";
 import ListCards from "../components/ListCards";
