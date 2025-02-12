@@ -6,9 +6,11 @@ import Reveal from "./ui/Reveal";
 import { useDeleteMoment } from "../features/profile/hooks/useDeleteMoment";
 import moment from "moment";
 import { useProfile } from "../context/ProfileContext";
+import { useProfileStore } from "../context/zustand/useProfileStore";
 
 export default function ListCards() {
   let { myMoments } = useProfile();
+  const { userProfile } = useProfileStore();
   myMoments = myMoments?.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
   const { deleteMoment, isLoading } = useDeleteMoment();
 
@@ -36,15 +38,17 @@ export default function ListCards() {
               }
               style={{ backgroundColor: myMoment.color }}
             >
-              <Button
-                disabled={isLoading}
-                onClick={() => handleRemoveMoment(myMoment.id)}
-                className={
-                  "mt-3 self-end p-1 transition duration-300 font-semibold text-white bg-[#000000] bg-opacity-30 rounded-full"
-                }
-              >
-                <RxDotsVertical className="text-[1.2rem]" />
-              </Button>
+              {!userProfile && (
+                <Button
+                  disabled={isLoading}
+                  onClick={() => handleRemoveMoment(myMoment.id)}
+                  className={
+                    "mt-3 self-end p-1 transition duration-300 font-semibold text-white bg-[#000000] bg-opacity-30 rounded-full"
+                  }
+                >
+                  <RxDotsVertical className="text-[1.2rem]" />
+                </Button>
+              )}
               <div
                 className="relative flex flex-grow items-center justify-center overflow-auto rounded-[20px]"
                 style={{ backgroundColor: myMoment.color }}
