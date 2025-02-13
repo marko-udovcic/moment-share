@@ -53,3 +53,21 @@ export async function followUser(followerId, followingId) {
 
   return data;
 }
+
+export async function getUserStatus(userId, targetUserId) {
+  if (!userId || !targetUserId) return { error: "Missing user IDs" };
+  console.log("ispis iz apiUsers,", userId, "i", targetUserId);
+  const { data, error } = await supabase
+    .from("followers")
+    .select("*")
+    .eq("follower_id", userId)
+    .eq("following_id", targetUserId)
+    .maybeSingle();
+
+  if (error) {
+    console.error("Error fetching user status:", error);
+    return { error };
+  }
+
+  return { isFollowing: !!data };
+}
