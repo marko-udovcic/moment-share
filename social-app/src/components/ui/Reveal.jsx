@@ -13,7 +13,6 @@ function Reveal({ children }) {
       mainControls.start("visible");
       slidesControls.start("visible");
     }
-    console.log("u view", isInView);
   }, [isInView, mainControls, slidesControls]);
 
   return (
