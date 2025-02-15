@@ -8,23 +8,26 @@ import { useFollowers } from "../features/profile/hooks/useFollowers";
 import { useProfile } from "../context/ProfileContext";
 import { useFollowing } from "../features/profile/hooks/useFollowing";
 
+import FollowButton from "./FollowButton";
+
 export default function Header({
   handleShowFollowers,
   handleShowFollowing,
   setShowDiscover,
   profileUser = {},
 }) {
-  const { myMoments } = useProfile();
   const { user: currentUser } = useCurrentUser();
   const isProfileUserEmpty = !profileUser || Object.keys(profileUser).length === 0;
   const activeUser = isProfileUserEmpty ? currentUser : profileUser;
+
+  const { myMoments } = useProfile();
   const { myFollowing, isLoading } = useFollowing(activeUser.id);
   const { myFollowers } = useFollowers(activeUser.id);
 
-  if (!currentUser || isLoading) return <div>Loading...</div>;
-
   const listFollowersLength = myFollowers?.length;
   const momentsLength = myMoments?.length;
+
+  if (!currentUser || isLoading) return <div>Loading...</div>;
 
   function closeDiscover() {
     setShowDiscover((prev) => !prev);
@@ -37,10 +40,12 @@ export default function Header({
           <H3 className="sm:text-xl">{activeUser.username}</H3>
         </Reveal>
 
-        {isProfileUserEmpty && (
+        {isProfileUserEmpty ? (
           <Button className="edit-btn" onClick={closeDiscover}>
             <IoPersonAddOutline className="text-3xl" />
           </Button>
+        ) : (
+          <FollowButton activeUserId={activeUser.id} />
         )}
 
         <H3 className="row-start-2">{momentsLength} Post</H3>
