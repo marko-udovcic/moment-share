@@ -4,22 +4,24 @@ import { useProfileStore } from "../../../context/zustand/useProfileStore";
 import { useEffect, useState } from "react";
 
 export function useCurrentUser() {
-  const setCurrentUser = useProfileStore((state) => state.setCurrentUser);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const { data: currentUser, isLoading } = useQuery({
+  const { currentUser, setCurrentUser } = useProfileStore();
+  const [isAuthenticated, setIsAuthenticated] = useState(!!currentUser);
+
+  const { data: fetchedUser, isLoading } = useQuery({
     queryKey: ["currentUser"],
-    queryFn: getCurrentUser,
+    queryFn: currentUser ? null : getCurrentUser,
+    enabled: !currentUser,
     onError: (err) => {
       console.error("Error fetching current user:", err);
     },
   });
 
   useEffect(() => {
-    if (currentUser) {
-      setCurrentUser(currentUser);
+    if (fetchedUser) {
+      setCurrentUser(fetchedUser);
       setIsAuthenticated(true);
     }
-  }, [currentUser, setCurrentUser]);
+  }, [fetchedUser, setCurrentUser]);
 
-  return { user: currentUser, isLoading, isAuthenticated };
+  return { user: currentUser || fetchedUser, isLoading, isAuthenticated };
 }
