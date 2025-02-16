@@ -9,10 +9,10 @@ export function useIsFollowed(targetUserId) {
   const { data, isLoading } = useQuery({
     queryKey: ["isFollowed", currentUserId, targetUserId],
     queryFn: () => getUserStatusApi(currentUserId, targetUserId),
-    enabled: !!currentUserId && !!targetUserId, // call if both id is available
+    enabled: !!currentUserId && !!targetUserId,
   });
 
-  const isFollowedData = data?.isFollowing || false;
+  const isFollowedData = data?.isFollowing;
 
   return { isFollowedData, isLoading };
 }

@@ -4,9 +4,11 @@ export function useFollowUser() {
   const queryClient = useQueryClient();
   const { mutate: followUser } = useMutation({
     mutationFn: ({ followerId, followingId }) => followUserApi(followerId, followingId),
-    onSuccess: ({ followerId }) => {
-      queryClient.invalidateQueries(["discoverUsers"]);
-      queryClient.invalidateQueries(["myFollowing", followerId]);
+    onSuccess: ({ followerId, followingId }) => {
+      queryClient.refetchQueries({ queryKey: ["isFollowed", followerId, followingId] });
+      queryClient.refetchQueries({ queryKey: ["myFollowers", followingId] });
+      queryClient.invalidateQueries({ queryKey: ["myFollowing", followerId] });
+      queryClient.invalidateQueries({ queryKey: ["discoverUsers"] });
     },
   });
 
