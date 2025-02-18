@@ -40,6 +40,16 @@ export async function getDiscoverUsers(followList) {
   }
   return data;
 }
+export async function getUserById(userId) {
+  const { data, error } = await supabase.from("users").select("*").eq("id", userId).single();
+
+  if (error) {
+    console.error("Error fetching user by ID:", error);
+    return null;
+  }
+
+  return data;
+}
 
 export async function followUser(followerId, followingId) {
   const { data, error } = await supabase
