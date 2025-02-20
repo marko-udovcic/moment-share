@@ -23,12 +23,25 @@ export async function getCommentsByMomentId(momentId) {
 }
 
 export async function addComment(userId, postId, content, parentId) {
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from("comments")
     .insert([{ user_id: userId, content: content, parent_id: parentId, post_id: postId }]);
 
   if (error) {
     console.error("Error following user:", error);
     return null;
+  }
+}
+export async function deleteComment(commentID) {
+  try {
+    const { error } = await supabase.from("comments").delete().eq("id", commentID);
+
+    if (error) {
+      throw error;
+    }
+    return true;
+  } catch (error) {
+    console.error("Error deleting comment:", error);
+    return false;
   }
 }
