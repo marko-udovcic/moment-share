@@ -6,6 +6,13 @@ export async function getUserMoments(id) {
   }
   return data;
 }
+export async function getUserMoment(blogId) {
+  const { data, error } = await supabase.from("posts").select("*").eq("id", blogId);
+  if (error) {
+    throw error;
+  }
+  return data;
+}
 
 export async function deleteMoment(id) {
   try {
