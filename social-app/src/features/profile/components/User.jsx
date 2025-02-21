@@ -9,10 +9,7 @@ export default function User({ follower, showFollowers, onClick }) {
           <h2 className="text-lg font-semibold text-white underline">{follower.username}</h2>
         </NavLink>
 
-        <Button
-          onClick={() => onClick(follower.id)}
-          className="rounded-lg bg-gray-500 p-2 text-white hover:bg-gray-400"
-        >
+        <Button onClick={() => onClick(follower.id)} className="p-2" variant="secondary">
           {showFollowers ? "Remove" : "Following"}
         </Button>
       </li>
