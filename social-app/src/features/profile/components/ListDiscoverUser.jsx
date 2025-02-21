@@ -3,33 +3,30 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import Card from "../../../components/ui/Card";
 import Button from "../../../components/ui/Button";
-import { shuffleUsers } from "../../../utils/arrayUtils";
 import { useProfileStore } from "../../../context/zustand/useProfileStore";
-import { useFollowing } from "../hooks/useFollowing";
-import { useFollowers } from "../hooks/useFollowers";
 import { useDiscoverUsers } from "../../../hooks/useDiscoverUsers";
 import { useEffect, useState } from "react";
+import { useFollowUser } from "../../../hooks/useFollowUser";
+import { useShuffledUsers } from "../hooks/useShuffledUsers";
 
 export default function ListDiscoverUser() {
   const [listDiscoverUsers, setListDiscoverUsers] = useState([]);
   const { currentUser } = useProfileStore();
-  const { myFollowing } = useFollowing(currentUser?.id);
-  const { myFollowers } = useFollowers(currentUser?.id);
-  const { discoverUsers, isLoading } = useDiscoverUsers(currentUser?.id, myFollowing, myFollowers);
+  const { discoverUsers, isLoading } = useDiscoverUsers(currentUser?.id);
+  const listShuffledUsers = useShuffledUsers(discoverUsers);
+  const { followUser } = useFollowUser();
 
   function handleRemoveDiscoverUser(userId) {
-    setListDiscoverUsers((listDiscoverUsers) => listDiscoverUsers.filter((user) => user.id !== userId));
+    setListDiscoverUsers((prevUsers) => prevUsers.filter((user) => user.id !== userId));
   }
   function handleFollowUser(user) {
+    followUser({ followerId: currentUser.id, followingId: user.id });
     handleRemoveDiscoverUser(user.id);
   }
 
   useEffect(() => {
-    if (discoverUsers && discoverUsers.length > 0) {
-      const shuffledUsers = shuffleUsers(discoverUsers).slice(0, 6);
-      setListDiscoverUsers(shuffledUsers);
-    }
-  }, [discoverUsers]);
+    setListDiscoverUsers(listShuffledUsers);
+  }, [listShuffledUsers]);
 
   if (isLoading) return <div>Loading</div>;
 
