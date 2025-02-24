@@ -3,11 +3,9 @@ import Button from "./Button";
 
 function ConfirmDelete({ onCloseModal, onConfirm, name }) {
   const handleDelete = () => {
-    console.log("Delete button clicked");
-    onConfirm(); // Pozovi funkciju za brisanje
-    onCloseModal(); // Zatvori modal
+    onConfirm();
+    onCloseModal();
   };
-
   return (
     <div>
       <h2 className="text-xl font-semibold text-white">Are you sure that you want delete this {name}?</h2>
