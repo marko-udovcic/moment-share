@@ -3,7 +3,7 @@ import "../styles/styles.css";
 import { useForm } from "react-hook-form";
 import AuthError from "../components/ui/AuthError";
 import { useLogin } from "../features/auth/hooks/useLogin";
-
+import Button from "../components/ui/Button";
 function Login() {
   const { login } = useLogin();
   const {
@@ -43,9 +43,7 @@ function Login() {
               className="border border-gray-600 text-white p-2 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none
                 bg-transparent"
             />
-            <button className="bg-blue-500 hover:bg-blue-600 text-white rounded-[8px] p-2 self-center w-full focus:outline-none mt-8">
-              Sign in
-            </button>
+            <Button variant="primary"> Sign in</Button>
           </form>
           <Link to="/register">
             <h3 className="mt-5 text-center">

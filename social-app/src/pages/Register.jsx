@@ -3,6 +3,7 @@ import "../styles/styles.css";
 import { useForm } from "react-hook-form";
 import AuthError from "../components/ui/AuthError";
 import { useSignup } from "../features/auth/hooks/useSignup";
+import Button from "../components/ui/Button";
 
 function Register() {
   const { signUp } = useSignup();
@@ -65,10 +66,7 @@ function Register() {
               className="border border-gray-600 text-white p-2 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none
                 bg-transparent"
             />
-
-            <button className="bg-blue-500 hover:bg-blue-600 text-white rounded-[8px] p-2 self-center w-full focus:outline-none mt-8">
-              Create account
-            </button>
+            <Button variant="primary"> Create account</Button>
           </form>
         </section>
       </div>
