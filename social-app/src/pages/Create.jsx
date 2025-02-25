@@ -27,7 +27,10 @@ export default function Create() {
     <>
       <Nav />
       <div className="flex min-h-80 w-full items-center justify-center text-white">
-        <form className="mx-auto mt-9 flex w-full flex-col rounded-xl p-7 md:w-1/2" onSubmit={handleSubmit}>
+        <form
+          className="mx-auto mt-9 flex w-full flex-col rounded-xl p-7 md:w-[70%] lg:w-1/2"
+          onSubmit={handleSubmit}
+        >
           <label className="p-3 font-sans text-xl">Choose color of card: </label>
           <input className="mx-3" type="color" value={color} onChange={(e) => setColor(e.target.value)} />
           <div className="flex flex-col bg-slate-800 rounded-sm relative mt-4">
@@ -39,8 +42,8 @@ export default function Create() {
             ></textarea>
             <Button
               className="w-1/2 mx-auto mb-5 flex items-center justify-center rounded-xl border border-transparent p-2 font-sans
-                font-semibold duration-700 hover:border-white bg-blue-400 md:mx-auto md:w-1/2 focus:outline-none lg:absolute
-                lg:right-5 lg:bottom-5 lg:w-[200px]"
+                font-semibold md:mx-auto md:w-1/2 focus:outline-none lg:absolute lg:right-5 lg:bottom-5 lg:w-[200px]"
+              variant="primary"
             >
               Add moment
             </Button>

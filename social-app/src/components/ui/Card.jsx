@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 
 export default function Card({ children, className, style }) {
   return (
-    <div className={`${className}`} style={style}>
+    <div className={`${className} `} style={style}>
       {children}
     </div>
   );
