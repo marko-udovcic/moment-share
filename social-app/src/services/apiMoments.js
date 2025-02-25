@@ -25,3 +25,22 @@ export async function deleteMoment(id) {
     throw error;
   }
 }
+export async function getFollowingMoments(userId) {
+  const { data, error } = await supabase
+    .from("posts")
+    .select("id, content, created_at, color, users: user_id (username, id)")
+    .in(
+      "user_id",
+      (await supabase.from("followers").select("following_id").eq("follower_id", userId)).data?.map(
+        (f) => f.following_id,
+      ) || [],
+    )
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error("Error fetching following moments:", error.message);
+    return [];
+  }
+
+  return data;
+}
