@@ -1,3 +1,13 @@
-.input-style {
-  @apply rounded border border-gray-600 bg-transparent p-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .input-style {
+    @apply rounded border border-gray-600 bg-transparent p-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500;
+  }
+
+  .grid-cards {
+    @apply z-0 m-auto mx-3 grid min-h-[50vh] grid-cols-1 gap-2 rounded-lg sm:grid-cols-2 md:mx-10 md:grid-cols-2 md:gap-5 lg:grid-cols-2 lg:p-5 xl:grid-cols-4;
+  }
 }
