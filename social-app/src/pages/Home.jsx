@@ -1,7 +1,14 @@
-export default function Home() {
+import Nav from "../components/Nav";
+
+import ListFollowingCard from "../features/home/components/ListFollowingCard";
+
+function Home() {
   return (
     <div>
-      <h1 className="text-white">hello</h1>
+      <Nav />
+      <ListFollowingCard />
     </div>
   );
 }
+
+export default Home;
