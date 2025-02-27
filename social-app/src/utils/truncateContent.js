@@ -1,4 +1,6 @@
-export function truncateContent(content, wordLimit, charLimit) {
-  const truncated = content.split(" ").slice(0, wordLimit).join(" ");
-  return content.length > charLimit ? truncated + "... Read more" : truncated;
+export function truncateContent(content, charLimit) {
+  if (content.length > charLimit) {
+    return content.slice(0, charLimit) + "... Read more";
+  }
+  return content;
 }

@@ -25,15 +25,12 @@ export default function ListCards() {
   };
 
   return (
-    <div
-      className="z-0 m-auto mx-3 grid min-h-[50vh] grid-cols-1 gap-10 rounded-lg sm:grid-cols-2 md:mx-10 md:grid-cols-2
-        lg:grid-cols-4 lg:p-5"
-    >
+    <div className="grid-cards">
       {sortedMoments && sortedMoments.length > 0 ? (
         sortedMoments.map((myMoment) => {
           const textColor = getLuminance(myMoment.color) > 128 ? "text-black" : "text-white";
           const date = moment(myMoment.created_at).calendar();
-          const displayContent = truncateContent(myMoment.content, 20, 30);
+          const displayContent = truncateContent(myMoment.content, 70);
 
           return (
             <div key={myMoment.id} className="relative">
@@ -76,7 +73,7 @@ export default function ListCards() {
         })
       ) : (
         <div className="grid place-items-center text-white text-3xl col-span-full xl:text-4xl">
-          No moments yet
+          <h2> No moments yet</h2>
         </div>
       )}
     </div>

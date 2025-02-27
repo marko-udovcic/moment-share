@@ -33,7 +33,7 @@ export default function Nav() {
                 to={link.href}
                 className={({ isActive }) =>
                   isActive
-                    ? "cursor-pointer rounded-xl bg-blue-400 px-5 py-2 font-sans text-[17px] font-semibold"
+                    ? "cursor-pointer rounded-xl bg-secondary px-5 py-2 font-sans text-[17px] font-semibold"
                     : "cursor-pointer rounded-xl font-sans text-[17px] font-semibold text-white hover:text-blue-400"
                 }
               >
